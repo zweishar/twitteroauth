@@ -3,3 +3,4 @@ type: module
 description: 'Provide Drupal integration with abraham/twitteroauth.'
 core: 8.x
 configure: twitteroauth.settings
+package: Web services
