@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
  * Configure twitteroauth settings.
  */
 class TwitterOauthSettingsForm extends ConfigFormBase {
+
   /**
    * {@inheritdoc}
    */
@@ -31,40 +32,40 @@ class TwitterOauthSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('twitteroauth.settings');
 
-    $form['consumer_key'] = array(
+    $form['consumer_key'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Consumer Key'),
       '#default_value' => $config->get('consumer_key'),
       '#required' => TRUE,
-    );
+    ];
 
-    $form['consumer_secret'] = array(
+    $form['consumer_secret'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Consumer Secret'),
       '#default_value' => $config->get('consumer_secret'),
       '#required' => TRUE,
-    );
+    ];
 
-    $form['access_token'] = array(
+    $form['access_token'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Access Token'),
       '#default_value' => $config->get('access_token'),
       '#required' => TRUE,
-    );
+    ];
 
-    $form['access_token_secret'] = array(
+    $form['access_token_secret'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Access Token Secret'),
       '#default_value' => $config->get('access_token_secret'),
       '#required' => TRUE,
-    );
+    ];
 
-    $form['default_search_operators'] = array(
+    $form['default_search_operators'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Default Search Operators'),
       '#default_value' => $config->get('default_search_operators'),
-      '#description' => t('Enter search operators that should be merged into the query of every twitter search block. An example would be filter:safe which instructs Twitter not to return potentially inappropriate content.')
-    );
+      '#description' => t('Enter search operators that should be merged into the query of every twitter search block. An example would be filter:safe which instructs Twitter not to return potentially inappropriate content.'),
+    ];
 
     return parent::buildForm($form, $form_state);
   }
@@ -73,7 +74,7 @@ class TwitterOauthSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    // Retrieve the configuration
+    // Retrieve the configuration.
     $this->configFactory->getEditable('twitteroauth.settings')
       ->set('consumer_key', $form_state->getValue('consumer_key'))
       ->set('consumer_secret', $form_state->getValue('consumer_secret'))
@@ -84,4 +85,5 @@ class TwitterOauthSettingsForm extends ConfigFormBase {
 
     parent::submitForm($form, $form_state);
   }
+
 }

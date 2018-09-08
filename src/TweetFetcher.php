@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\twitteroauth\TweetFetcher.
- */
 namespace Drupal\twitteroauth;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
@@ -13,7 +9,7 @@ use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Config\ConfigFactory;
 
 /**
- * Class TweetFetcher
+ * Class TweetFetcher.
  *
  * @package Drupal\twitteroauth
  */
@@ -25,27 +21,37 @@ class TweetFetcher {
   const DISPLAY_MEDIA_VALUE = '1';
 
   /**
+   * Logging service.
+   *
    * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
   protected $logger;
 
   /**
+   * Config storage.
+   *
    * @var \Drupal\Core\Config\Config|\Drupal\Core\Config\ImmutableConfig
    */
   protected $config;
 
   /**
+   * Cache backend.
+   *
    * @var \Drupal\Core\Cache\CacheBackendInterface
    */
   protected $cache;
 
   /**
+   * Twitter client.
+   *
    * @var \Abraham\TwitterOAuth\TwitterOAuth|bool
    */
   protected $client;
 
   /**
-   * @var boolean
+   * If the twitter connection is valid.
+   *
+   * @var bool
    */
   protected $validClientConnection;
 
@@ -53,7 +59,7 @@ class TweetFetcher {
    * Creates a new TweetFetcher.
    *
    * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
-   *  Logger factory.
+   *   Logger factory.
    * @param \Drupal\Core\Config\ConfigFactory $configFactory
    *   Config factory.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cacheBackend
@@ -70,7 +76,8 @@ class TweetFetcher {
   /**
    * Determine if connection to twitter client was successful.
    *
-   * @return boolean
+   * @return bool
+   *   If connection is valid.
    */
   public function validClientConnection() {
     return $this->validClientConnection;
@@ -80,11 +87,16 @@ class TweetFetcher {
    * Fetch tweets.
    *
    * @param string $count
+   *   Number of tweets to pull.
    * @param string $searchOperators
+   *   Search operators to use.
    * @param string $displayMedia
+   *   Whether or not to display media.
    * @param int $cacheExpiration
+   *   How long to cache data for.
    *
-   * @return array|NULL
+   * @return array
+   *   Tweet data.
    */
   public function fetch($count, $searchOperators, $displayMedia, $cacheExpiration) {
     if ($this->validClientConnection == FALSE) {
@@ -129,7 +141,7 @@ class TweetFetcher {
         substr($tweet->full_text, $tweet->display_text_range['1'],
         strlen($tweet->full_text))
       );
-      if (!empty( $tweet->extended_entities) && $displayMedia === self::DISPLAY_MEDIA_VALUE) {
+      if (!empty($tweet->extended_entities) && $displayMedia === self::DISPLAY_MEDIA_VALUE) {
         $content['#media_url'] = $tweet->extended_entities->media['0']->media_url_https;
       }
       $content['#screen_name'] = $this->buildRichTextRenderArray($tweet->user->screen_name);
@@ -141,7 +153,7 @@ class TweetFetcher {
     }
 
     if (!empty($tweets)) {
-      $this->cache->set($cid, $tweets,  time() + ($cacheExpiration * 60), []);
+      $this->cache->set($cid, $tweets, time() + ($cacheExpiration * 60), []);
       $tweets_wrapper = [
         '#items' => $tweets,
         '#theme' => 'twitteroauth_content_wrapper',
@@ -153,9 +165,11 @@ class TweetFetcher {
   /**
    * Validates response object from twitter API.
    *
-   * @param $response
+   * @param object $response
+   *   API response.
    *
-   * @return boolean
+   * @return bool
+   *   If the response is valid.
    */
   protected function isInvalidResponse($response) {
     if (isset($response->errors)) {
@@ -167,10 +181,13 @@ class TweetFetcher {
   /**
    * Builds render array to properly handle rich text input.
    *
-   * @param $text
+   * @param string $text
+   *   Text to build render array with.
    * @param string $format
+   *   Text format to use in rendered array.
    *
    * @return array
+   *   Render array.
    */
   protected function buildRichTextRenderArray($text, $format = 'basic_html') {
     return [
@@ -194,7 +211,7 @@ class TweetFetcher {
    * Get twitter client object.
    *
    * @return \Abraham\TwitterOAuth\TwitterOAuth|bool
-   *   An instantiated twitter oauth object; otherwise FALSE if an error occurred.
+   *   An instantiated twitter oauth object.
    */
   protected function getClient() {
     if ($credentials = $this->getCredentials()) {
@@ -215,6 +232,7 @@ class TweetFetcher {
    * Validates that required credentials have been set.
    *
    * @return array|null
+   *   Client credentials.
    */
   protected function getCredentials() {
     $requiredCredentials = [

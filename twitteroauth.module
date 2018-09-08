@@ -11,6 +11,7 @@ use Drupal\Core\Block\BlockPluginInterface;
  * Implements hook_theme().
  *
  * @return array
+ *   Theme variables.
  */
 function twitteroauth_theme() {
   return [
@@ -39,8 +40,8 @@ function twitteroauth_theme() {
 function twitteroauth_block_view_alter(array &$build, BlockPluginInterface $block) {
   if (property_exists($block, 'blockContent')) {
     if (\Drupal::service('entity.repository')
-        ->loadEntityByUuid('block_content', $block->getDerivativeId())
-        ->bundle() == 'twitteroauth_search'
+      ->loadEntityByUuid('block_content', $block->getDerivativeId())
+      ->bundle() == 'twitteroauth_search'
     ) {
       $build['#pre_render'][] = '_twitteroauth_pre_render_fetchtweets';
     }
@@ -50,24 +51,26 @@ function twitteroauth_block_view_alter(array &$build, BlockPluginInterface $bloc
 /**
  * Pre render callback to fetch twitter data.
  *
- * @param $build
+ * @param array $build
+ *   The build.
  *
  * @return mixed
+ *   The build.
  */
-function _twitteroauth_pre_render_fetchtweets($build) {
+function _twitteroauth_pre_render_fetchtweets(array $build) {
   if (!empty($build['content']['#block_content'])) {
     $block = $build['content']['#block_content'];
     $build['content']['tweet_content'] = [
-    '#lazy_builder' => [
-      'twitteroauth.tweet_fetcher:fetch',
+      '#lazy_builder' => [
+        'twitteroauth.tweet_fetcher:fetch',
       [
         $block->field_twitteroauth_tweet_count->value,
         trim($block->field_twitteroauth_search_query->value),
         $block->field_twitteroauth_display_media->value,
         $block->field_twitteroauth_expiration->value,
-      ]
-    ],
-    '#create_placeholder' => FALSE,
+      ],
+      ],
+      '#create_placeholder' => FALSE,
     ];
   }
 
