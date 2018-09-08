@@ -1,0 +1,19 @@
+uuid: b3fd4da9-4b51-44e5-a848-d01efda7f7a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.twitteroauth_search
+    - field.storage.block_content.field_twitteroauth_search_query
+id: block_content.twitteroauth_search.field_twitteroauth_search_query
+field_name: field_twitteroauth_search_query
+entity_type: block_content
+bundle: twitteroauth_search
+label: 'Search Query'
+description: 'Enter a search query to narrow down your result set. Visit <a href="https://developer.twitter.com/en/docs/tweets/rules-and-filtering/overview/standard-operators.html">twitter search documentation</a> for example syntax.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

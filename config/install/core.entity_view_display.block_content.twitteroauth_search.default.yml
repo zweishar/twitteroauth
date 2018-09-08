@@ -1,0 +1,23 @@
+uuid: 2528de5f-99f4-4c5f-9e67-e8534fcca261
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.twitteroauth_search
+    - field.field.block_content.twitteroauth_search.field_twitteroauth_display_media
+    - field.field.block_content.twitteroauth_search.field_twitteroauth_expiration
+    - field.field.block_content.twitteroauth_search.field_twitteroauth_search_query
+    - field.field.block_content.twitteroauth_search.field_twitteroauth_tweet_count
+_core:
+  default_config_hash: CyQynmzdpjJs6ivLWcBRcxwOv0RkArhgKIkMKkaCHt8
+id: block_content.twitteroauth_search.default
+targetEntityType: block_content
+bundle: twitteroauth_search
+mode: default
+content: {  }
+hidden:
+  field_twitteroauth_display_media: true
+  field_twitteroauth_expiration: true
+  field_twitteroauth_search_query: true
+  field_twitteroauth_tweet_count: true
+  langcode: true

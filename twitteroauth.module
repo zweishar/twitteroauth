@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * @file
+ * This module holds functions for twitteroauth.
+ */
+
+use Drupal\Core\Block\BlockPluginInterface;
+
+/**
+ * Implements hook_theme().
+ *
+ * @return array
+ */
+function twitteroauth_theme() {
+  return [
+    'twitteroauth_content' => [
+      'variables' => [
+        'display_text' => NULL,
+        'name' => NULL,
+        'tweet_link' => NULL,
+        'media_url' => NULL,
+        'screen_name' => NULL,
+        'created_at' => NULL,
+        'result_index' => NULL,
+      ],
+    ],
+    'twitteroauth_content_wrapper' => [
+      'variables' => [
+        'items' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_block_view_alter().
+ */
+function twitteroauth_block_view_alter(array &$build, BlockPluginInterface $block) {
+  if (property_exists($block, 'blockContent')) {
+    if (\Drupal::service('entity.repository')
+        ->loadEntityByUuid('block_content', $block->getDerivativeId())
+        ->bundle() == 'twitteroauth_search'
+    ) {
+      $build['#pre_render'][] = '_twitteroauth_pre_render_fetchtweets';
+    }
+  }
+}
+
+/**
+ * Pre render callback to fetch twitter data.
+ *
+ * @param $build
+ *
+ * @return mixed
+ */
+function _twitteroauth_pre_render_fetchtweets($build) {
+  if (!empty($build['content']['#block_content'])) {
+    $block = $build['content']['#block_content'];
+    $build['content']['tweet_content'] = [
+    '#lazy_builder' => [
+      'twitteroauth.tweet_fetcher:fetch',
+      [
+        $block->field_twitteroauth_tweet_count->value,
+        trim($block->field_twitteroauth_search_query->value),
+        $block->field_twitteroauth_display_media->value,
+        $block->field_twitteroauth_expiration->value,
+      ]
+    ],
+    '#create_placeholder' => FALSE,
+    ];
+  }
+
+  return $build;
+}

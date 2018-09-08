@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a twitteroauth block.
+ *
+ * Available variables:
+ * - tweet_link: Link to tweet on twitter.com.
+ * - screen_name: Screen name of account that sent tweet.
+ * - display_text: Tweet text.
+ * - media_url: URL for first media item embeded in tweet.
+ * - result_index: The position order of this tweet.
+ *
+ * @ingroup themeable
+ */
+#}
+
+<a href="{{ tweet_link }}">
+  <div>
+    <p>{{ screen_name }}</p>
+    <p>{{ display_text }}</p>
+    {% if media_url %}
+      <img src="{{ media_url }}" />
+    {% endif %}
+  </div>
+</a>

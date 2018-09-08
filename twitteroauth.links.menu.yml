@@ -1,0 +1,5 @@
+twitteroauth.settings:
+  title: 'Twitter Oauth Settings'
+  parent: system.admin_config_services
+  description: 'Configure Twitter Oauth settings and credentials'
+  route_name: twitteroauth.settings

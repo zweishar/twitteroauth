@@ -1,0 +1,23 @@
+uuid: a183bae3-19a9-4de5-91c7-ed4e0723d123
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.twitteroauth_search
+    - field.storage.block_content.field_twitteroauth_expiration
+id: block_content.twitteroauth_search.field_twitteroauth_expiration
+field_name: field_twitteroauth_expiration
+entity_type: block_content
+bundle: twitteroauth_search
+label: 'Cache Expiration'
+description: 'Enter a time (in minutes) for how long twitter responses should be cached. If you do not set this field, it will default to 60 minutes. A lower number will give you more up-to-date tweets, but will put increased load on your server. Also keep in mind that the free tier of Twitter''s API is rate limited to 450 requests within a 15 minute window. If you exceed this limit, no data will be returned from Twitter until the 15 minute window expires.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

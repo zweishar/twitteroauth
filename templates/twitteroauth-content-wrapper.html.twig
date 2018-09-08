@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a twitteroauth block wrapper.
+ *
+ * Available variables:
+ * - items: Twitter OAuth content items. Each item contains:
+ *   - tweet_link: Link to tweet on twitter.com.
+ *   - screen_name: Screen name of account that sent tweet.
+ *   - display_text: Tweet text.
+ *   - media_url: URL for first media item embeded in tweet.
+ *   - result_index: The position order of this tweet.
+ *
+ * @ingroup themeable
+ */
+#}
+<div class="twitteroauth-content-wrapper">
+  {% for item in items %}
+    {{ item }}
+  {% endfor %}
+</div>

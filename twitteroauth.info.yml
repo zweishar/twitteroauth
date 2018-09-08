@@ -1,0 +1,5 @@
+name: Twitter Oauth
+type: module
+description: 'Provide Drupal integration with abraham/twitteroauth.'
+core: 8.x
+configure: twitteroauth.settings

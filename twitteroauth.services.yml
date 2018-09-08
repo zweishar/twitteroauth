@@ -1,0 +1,4 @@
+services:
+  twitteroauth.tweet_fetcher:
+    class: Drupal\twitteroauth\TweetFetcher
+    arguments: ['@logger.factory', '@config.factory', '@cache.default']

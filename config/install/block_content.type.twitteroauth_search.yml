@@ -1,0 +1,8 @@
+uuid: 7544f76d-fdc3-4ab4-b62b-9c38b0182683
+langcode: en
+status: true
+dependencies: {  }
+id: twitteroauth_search
+label: 'Twitter Search'
+revision: 1
+description: 'Use <em>Twitter Search</em> blocks to display a tweet listing based on a customized search query.'

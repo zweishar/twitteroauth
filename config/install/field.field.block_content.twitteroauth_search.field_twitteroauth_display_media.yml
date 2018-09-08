@@ -1,0 +1,23 @@
+uuid: f08c0546-3ea1-4eac-9205-85223a50f780
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.twitteroauth_search
+    - field.storage.block_content.field_twitteroauth_display_media
+id: block_content.twitteroauth_search.field_twitteroauth_display_media
+field_name: field_twitteroauth_display_media
+entity_type: block_content
+bundle: twitteroauth_search
+label: 'Display Media'
+description: 'Check this box if you would like to display media embedded in tweets,'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

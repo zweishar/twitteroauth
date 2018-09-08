@@ -1,0 +1,68 @@
+uuid: 6ea9c0d2-bc72-4871-abf7-9294df8029d7
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.twitteroauth_search
+    - field.field.block_content.twitteroauth_search.field_twitteroauth_display_media
+    - field.field.block_content.twitteroauth_search.field_twitteroauth_expiration
+    - field.field.block_content.twitteroauth_search.field_twitteroauth_search_query
+    - field.field.block_content.twitteroauth_search.field_twitteroauth_tweet_count
+_core:
+  default_config_hash: el_iag-56VxziaMUzHkzQHra7S21YsqwwMJ6dr9DDlk
+id: block_content.twitteroauth_search.default
+targetEntityType: block_content
+bundle: twitteroauth_search
+mode: default
+content:
+  field_twitteroauth_display_media:
+    weight: 26
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_twitteroauth_expiration:
+    weight: 27
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_twitteroauth_search_query:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_twitteroauth_tweet_count:
+    weight: 2
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  info:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 4
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 3
+    settings: {  }
+    region: content
+    third_party_settings: {  }
+hidden: {  }

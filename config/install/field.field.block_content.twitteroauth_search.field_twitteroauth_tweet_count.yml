@@ -1,0 +1,23 @@
+uuid: a46f9632-b69f-4b94-ac59-ea1d886cc539
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.twitteroauth_search
+    - field.storage.block_content.field_twitteroauth_tweet_count
+id: block_content.twitteroauth_search.field_twitteroauth_tweet_count
+field_name: field_twitteroauth_tweet_count
+entity_type: block_content
+bundle: twitteroauth_search
+label: 'Tweet Count'
+description: 'Enter the number of tweets to display. The maximum allowed by the Twitter API is 100.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1
+  max: 100
+  prefix: ''
+  suffix: ''
+field_type: integer

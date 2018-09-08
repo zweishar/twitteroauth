@@ -1,0 +1,7 @@
+twitteroauth.settings:
+  path: '/admin/config/services/twitteroauth/settings'
+  defaults:
+    _form: '\Drupal\twitteroauth\Form\TwitterOauthSettingsForm'
+    _title: 'Twitter Oauth'
+  requirements:
+    _permission: 'administer site configuration'
