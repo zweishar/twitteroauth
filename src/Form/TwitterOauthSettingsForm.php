@@ -63,7 +63,7 @@ class TwitterOauthSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Default Search Operators'),
       '#default_value' => $config->get('default_search_operators'),
-      '#description' => t('Enter search operators that should be merged into every twitter query.')
+      '#description' => t('Enter search operators that should be merged into the query of every twitter search block. An example would be filter:safe which instructs Twitter not to return potentially inappropriate content.')
     );
 
     return parent::buildForm($form, $form_state);
