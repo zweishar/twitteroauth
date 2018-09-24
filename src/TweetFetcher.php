@@ -155,11 +155,10 @@ class TweetFetcher {
 
     if (!empty($tweets)) {
       $this->cache->set($cid, $tweets, time() + ($cacheExpiration * 60), []);
-      $tweets_wrapper = [
-        '#items' => $tweets,
-        '#theme' => 'twitteroauth_content_wrapper',
-      ];
-      return $tweets_wrapper;
+      return $tweets;
+    }
+    else {
+      $this->logger->notice('No tweets returned for query: ' . $searchOperators);
     }
   }
 

@@ -26,11 +26,6 @@ function twitteroauth_theme() {
         'result_index' => NULL,
       ],
     ],
-    'twitteroauth_content_wrapper' => [
-      'variables' => [
-        'items' => NULL,
-      ],
-    ],
   ];
 }
 
@@ -38,23 +33,25 @@ function twitteroauth_theme() {
  * Implements hook_block_view_alter().
  */
 function twitteroauth_block_view_alter(array &$build, BlockPluginInterface $block) {
-  if (property_exists($block, 'blockContent')) {
-    $test = $block->field_twitteroauth_tweet_count->value;
-
-
-    if (\Drupal::service('entity.repository')
-      ->loadEntityByUuid('block_content', $block->getDerivativeId())
-      ->bundle() == 'twitteroauth_search'
-    ) {
+  if (strpos($block->getPluginId(), 'block_content') !== FALSE) {
+    $entity = \Drupal::service('entity.repository')->loadEntityByUuid('block_content', $block->getDerivativeId());
+    if (!empty($entity) && $entity->bundle() == 'twitteroauth_search') {
+      $build['#_entity'] = $entity;
+      $build['content']['tweet_content'] = [
+        '#lazy_builder' => [
+          'twitteroauth.tweet_fetcher:fetch',
+          [
+            $entity->field_twitteroauth_tweet_count->value,
+            trim($entity->field_twitteroauth_search_query->value),
+            $entity->field_twitteroauth_display_media->value,
+            $entity->field_twitteroauth_expiration->value,
+          ],
+        ],
+        '#create_placeholder' => FALSE,
+      ];
       $build['#pre_render'][] = '_twitteroauth_pre_render_fetchtweets';
     }
-
-    $test = $block->field_twitteroauth_tweet_count->value;
   }
-}
-
-function twitteroauth_block_build_alter(&$build, \Drupal\Core\Block\BlockPluginInterface $block) {
-  $tst = 's';
 }
 
 /**
@@ -67,16 +64,15 @@ function twitteroauth_block_build_alter(&$build, \Drupal\Core\Block\BlockPluginI
  *   The build.
  */
 function _twitteroauth_pre_render_fetchtweets(array $build) {
-  if (!empty($build['content']['#block_content'])) {
-    $block = $build['content']['#block_content'];
+  if (!empty($build['#_entity'])) {
     $build['content']['tweet_content'] = [
       '#lazy_builder' => [
         'twitteroauth.tweet_fetcher:fetch',
       [
-        $block->field_twitteroauth_tweet_count->value,
-        trim($block->field_twitteroauth_search_query->value),
-        $block->field_twitteroauth_display_media->value,
-        $block->field_twitteroauth_expiration->value,
+        $build['#_entity']->field_twitteroauth_tweet_count->value,
+        trim($build['#_entity']->field_twitteroauth_search_query->value),
+        $build['#_entity']->field_twitteroauth_display_media->value,
+        $build['#_entity']->field_twitteroauth_expiration->value,
       ],
       ],
       '#create_placeholder' => FALSE,
