@@ -2,6 +2,8 @@
 
 Allows for creation of custom blocks which display results from the Twitter search API. Once installed, this module adds a custom block type called "Twitter Search". This block allows you to use Twitter's [standard search operators](https://developer.twitter.com/en/docs/tweets/search/guides/standard-operators.html) in order to specify what types of search results to pull back.
 
+This module does not come packaged with any associated styling. If you wish to update the styling or layout, you can copy the template file bundled with this module into your theme in order to override it.
+
 ## Usage instructions
 
 - Once installed, navigate to `admin/config/services/twitteroauth/settings` to enter your Twitter API keys. If you do not yet have Twitter API keys generated for your application, visit https://apps.twitter.com/ and create a new twitter application.
