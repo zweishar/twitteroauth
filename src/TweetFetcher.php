@@ -100,7 +100,8 @@ class TweetFetcher {
    */
   public function fetch($count, $searchOperators, $displayMedia, $cacheExpiration) {
     if ($this->validClientConnection == FALSE) {
-      return [];
+      $this->logger->notice('Invalid connection to Twitter client.');
+      return $this->getErrorMessage();
     }
 
     if (empty($cacheExpiration)) {
@@ -124,12 +125,12 @@ class TweetFetcher {
       array_merge($requestParameters, $this->getDefaultRequestParameters())
     );
 
-    if (!$this->isInvalidResponse($twitter_response)) {
-      return NULL;
+    if (!$this->isValidResponse($twitter_response)) {
+      $this->logResponseErrors($twitter_response);
+      return $this->getErrorMessage();
     }
 
     $tweets = [];
-
     foreach ($twitter_response->statuses as $id => $tweet) {
       $tweet_text = substr(
         $tweet->full_text,
@@ -171,7 +172,7 @@ class TweetFetcher {
    * @return bool
    *   If the response is valid.
    */
-  protected function isInvalidResponse($response) {
+  protected function isValidResponse($response) {
     if (isset($response->errors)) {
       return FALSE;
     }
@@ -195,6 +196,31 @@ class TweetFetcher {
       '#text' => $text,
       '#format' => $format,
     ];
+  }
+
+  /**
+   * Error message to print on screen in case of fetch issues.
+   *
+   * @return array
+   *   Render array.
+   */
+  protected function getErrorMessage() {
+    return [
+      '#markup' => '<p>We sorry, but we are having trouble connecting to Twitter.</p>',
+    ];
+  }
+
+  /**
+   * Log errors from Twitter API response object.
+   *
+   * @param object $response
+   */
+  protected function logResponseErrors($response) {
+    if (!empty($response->errors)) {
+      foreach ($response->errors as $error) {
+        $this->logger->error($error->code . ': ' . $error->message);
+      }
+    }
   }
 
   /**

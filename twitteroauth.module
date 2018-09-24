@@ -39,13 +39,22 @@ function twitteroauth_theme() {
  */
 function twitteroauth_block_view_alter(array &$build, BlockPluginInterface $block) {
   if (property_exists($block, 'blockContent')) {
+    $test = $block->field_twitteroauth_tweet_count->value;
+
+
     if (\Drupal::service('entity.repository')
       ->loadEntityByUuid('block_content', $block->getDerivativeId())
       ->bundle() == 'twitteroauth_search'
     ) {
       $build['#pre_render'][] = '_twitteroauth_pre_render_fetchtweets';
     }
+
+    $test = $block->field_twitteroauth_tweet_count->value;
   }
+}
+
+function twitteroauth_block_build_alter(&$build, \Drupal\Core\Block\BlockPluginInterface $block) {
+  $tst = 's';
 }
 
 /**
