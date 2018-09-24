@@ -138,10 +138,7 @@ class TweetFetcher {
         $tweet->display_text_range['1']
       );
       $content['#display_text'] = $this->buildRichTextRenderArray($tweet_text);
-      $content['#tweet_link'] = trim(
-        substr($tweet->full_text, $tweet->display_text_range['1'],
-        strlen($tweet->full_text))
-      );
+      $content['#tweet_link'] = "https://twitter.com/statuses/{$tweet->id}";
       if (!empty($tweet->extended_entities) && $displayMedia === self::DISPLAY_MEDIA_VALUE) {
         $content['#media_url'] = $tweet->extended_entities->media['0']->media_url_https;
       }
@@ -155,11 +152,12 @@ class TweetFetcher {
 
     if (!empty($tweets)) {
       $this->cache->set($cid, $tweets, time() + ($cacheExpiration * 60), []);
-      return $tweets;
     }
     else {
       $this->logger->notice('No tweets returned for query: ' . $searchOperators);
     }
+
+    return $tweets;
   }
 
   /**
@@ -204,8 +202,9 @@ class TweetFetcher {
    *   Render array.
    */
   protected function getErrorMessage() {
+    $message = t('We sorry, but we are having trouble connecting to Twitter.');
     return [
-      '#markup' => '<p>We sorry, but we are having trouble connecting to Twitter.</p>',
+      '#markup' => "<p>{$message}</p>",
     ];
   }
 
