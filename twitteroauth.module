@@ -37,18 +37,6 @@ function twitteroauth_block_view_alter(array &$build, BlockPluginInterface $bloc
     $entity = \Drupal::service('entity.repository')->loadEntityByUuid('block_content', $block->getDerivativeId());
     if (!empty($entity) && $entity->bundle() == 'twitteroauth_search') {
       $build['#_entity'] = $entity;
-      $build['content']['tweet_content'] = [
-        '#lazy_builder' => [
-          'twitteroauth.tweet_fetcher:fetch',
-          [
-            $entity->field_twitteroauth_tweet_count->value,
-            trim($entity->field_twitteroauth_search_query->value),
-            $entity->field_twitteroauth_display_media->value,
-            $entity->field_twitteroauth_expiration->value,
-          ],
-        ],
-        '#create_placeholder' => FALSE,
-      ];
       $build['#pre_render'][] = '_twitteroauth_pre_render_fetchtweets';
     }
   }
