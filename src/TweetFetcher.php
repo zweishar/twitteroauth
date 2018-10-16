@@ -5,8 +5,8 @@ namespace Drupal\twitteroauth;
 use Abraham\TwitterOAuth\TwitterOAuth;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Cache\CacheBackendInterface;
-use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\Logger\LoggerChannelFactory;
 
 /**
  * Class TweetFetcher.
