@@ -9,9 +9,6 @@ use Drupal\Core\Block\BlockPluginInterface;
 
 /**
  * Implements hook_theme().
- *
- * @return array
- *   Theme variables.
  */
 function twitteroauth_theme() {
   return [

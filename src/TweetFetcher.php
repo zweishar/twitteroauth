@@ -202,7 +202,8 @@ class TweetFetcher {
    *   Render array.
    */
   protected function getErrorMessage() {
-    $message = t('We sorry, but we are having trouble connecting to Twitter.');
+    $message = $this->t('We sorry, but we are having trouble connecting to
+       Twitter.');
     return [
       '#markup' => "<p>{$message}</p>",
     ];
@@ -212,6 +213,7 @@ class TweetFetcher {
    * Log errors from Twitter API response object.
    *
    * @param object $response
+   *   For error response.
    */
   protected function logResponseErrors($response) {
     if (!empty($response->errors)) {
